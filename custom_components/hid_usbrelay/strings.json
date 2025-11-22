@@ -1,0 +1,37 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Setup USB Relay",
+        "description": "Detecting USB Relay board...",
+        "data": {
+          "relays": "Number of Relays"
+        }
+      },
+      "confirm": {
+        "title": "USB Relay Found",
+        "description": "Found device: {product}. Do you want to set it up?"
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect",
+      "no_device": "No USB Relay found (16c0:05df)"
+    },
+    "abort": {
+      "already_configured": "Device is already configured"
+    }
+  },
+  "entity": {
+    "button": {
+      "pulse": {
+        "name": "Pulse Relay {channel}"
+      }
+    },
+    "switch": {
+      "relay": {
+        "name": "Relay {channel}"
+      }
+    }
+  }
+}
+

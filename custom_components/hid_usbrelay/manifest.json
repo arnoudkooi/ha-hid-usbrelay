@@ -1,0 +1,12 @@
+{
+  "domain": "hid_usbrelay",
+  "name": "USB Relay (HID)",
+  "codeowners": [],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/arnoudkooi/ha-hid-usbrelay",
+  "iot_class": "local_polling",
+  "issue_tracker": "https://github.com/arnoudkooi/ha-hid-usbrelay/issues",
+  "requirements": ["pyusb>=1.2.1"],
+  "version": "1.0.0"
+}

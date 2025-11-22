@@ -1,0 +1,6 @@
+{
+  "name": "HID USB Relay",
+  "render_readme": true,
+  "country": "NL",
+  "homeassistant": "2023.1.0"
+}
