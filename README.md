@@ -2,36 +2,24 @@
 
 ![USB Relay Board](usbrelay.jpg)
 
-Control **HID USB Relay boards** (Commonly `16c0:05df`) directly from Home Assistant.
-
-> **💡 Migrating from Raspberry Pi GPIO?**  
-> This is an ideal replacement if you've been using GPIO pins on a Raspberry Pi and are switching to a Mini PC or other hardware without GPIO support. Simply connect a USB relay board to maintain your relay control functionality.
+Control **HID USB Relay boards** (Commonly `16c0:05df`) directly from Home Assistant. 
 
 [![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=arnoudkooi&repository=ha-hid-usbrelay&category=integration)
 
 ## Features
 - **Full UI Configuration**: Auto-discovery and setup via the Integrations page.
+- **Per-Channel Customization**: Configure custom names and area assignments for each relay.
+- **Automatic Area Assignment**: Areas propagate to HomeKit Bridge and other integrations.
 - **Device Registry**: Relays are grouped under a single device.
 - **Pulse Buttons**: Each relay gets a dedicated "Pulse" button entity (1s duration).
 - **Native Integration**: No Node.js or external scripts required.
 - **Automatic Discovery**: Detects 1, 2, 4, or 8 channel boards.
 
-## Installation
+## Installation (via HACS)
 
-### Via HACS (Recommended)
-
-1. Open HACS in your Home Assistant
-2. Search for "HID USB Relay"
-3. Click **Download**
-4. **Restart Home Assistant**
-5. **Full reboot required** (not just restart) after USB Relay is first connected
-
-### Manual Installation
-
-1. Download the latest release from [GitHub releases](https://github.com/arnoudkooi/ha-hid-usbrelay/releases)
-2. Extract and copy the `custom_components/hid_usbrelay` folder to your Home Assistant's `custom_components` directory
-3. **Restart Home Assistant**
-4. **Full reboot required** (not just restart) after USB Relay is first connected
+1.  Click the **Open in HACS** button above.
+2.  Click **Download** (you might need to "Redownload" if updating).
+3.  **Reboot device** (Don't just restart Home Assistant).
 
 ## Configuration
 
@@ -42,8 +30,15 @@ Control **HID USB Relay boards** (Commonly `16c0:05df`) directly from Home Assis
 5.  Click **Submit**.
 
 ### You will get:
-*   **Switch Entities**: `switch.relay_1`, `switch.relay_2`... (On/Off)
-*   **Pulse Buttons**: `button.pulse_relay_1`, `button.pulse_relay_2`... (Momentary 1s)
+*   **Switch Entities**: One switch per relay channel (On/Off control)
+*   **Pulse Buttons**: One button per relay channel (Momentary 1s pulse)
+
+### Customization (Optional)
+After setup, click **Configure** on the integration to:
+*   **Set custom names** for each channel (e.g., "Living Room Light", "Garage Door")
+*   **Assign areas** using the area selector to automatically organize entities by location
+*   Area assignments automatically propagate to integrations like HomeKit Bridge
+*   Names default to "Relay 1", "Relay 2", etc. if not customized
 
 ![USB Relay Board](ha-usbrelay.png)
 

@@ -3,8 +3,9 @@ import usb.core
 import usb.util
 import voluptuous as vol
 from homeassistant import config_entries
-from homeassistant.core import HomeAssistant
+from homeassistant.core import HomeAssistant, callback
 from homeassistant.data_entry_flow import FlowResult
+from homeassistant.helpers import selector
 
 from .const import DOMAIN
 
@@ -77,4 +78,55 @@ class UsbRelayConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             elif "Relay8" in product: num_relays = 8
             
         return {"product": product, "num_relays": num_relays}
+
+    @staticmethod
+    @callback
+    def async_get_options_flow(config_entry):
+        """Get the options flow for this handler."""
+        return UsbRelayOptionsFlow(config_entry)
+
+
+class UsbRelayOptionsFlow(config_entries.OptionsFlow):
+    """Handle options flow for USB Relay."""
+
+    def __init__(self, config_entry):
+        """Initialize options flow."""
+        self.config_entry = config_entry
+
+    async def async_step_init(self, user_input=None):
+        """Manage the options."""
+        if user_input is not None:
+            # Process the input and structure it
+            channels = {}
+            num_relays = self.config_entry.data.get("relays", 8)
+            
+            for i in range(1, num_relays + 1):
+                channels[f"channel_{i}"] = {
+                    "name": user_input.get(f"channel_{i}_name", f"Relay {i}"),
+                    "area_id": user_input.get(f"channel_{i}_area", None),
+                }
+            
+            return self.async_create_entry(title="", data={"channels": channels})
+
+        # Build schema with current values
+        num_relays = self.config_entry.data.get("relays", 8)
+        channel_config = self.config_entry.options.get("channels", {})
+        
+        schema = {}
+        for i in range(1, num_relays + 1):
+            current = channel_config.get(f"channel_{i}", {})
+            schema[vol.Optional(
+                f"channel_{i}_name", 
+                default=current.get("name", f"Relay {i}")
+            )] = str
+            schema[vol.Optional(
+                f"channel_{i}_area", 
+                default=current.get("area_id", None)
+            )] = selector.AreaSelector()
+        
+        return self.async_show_form(
+            step_id="init",
+            data_schema=vol.Schema(schema),
+            description_placeholders={"num_relays": str(num_relays)},
+        )
 

@@ -21,6 +21,32 @@
       "already_configured": "Device is already configured"
     }
   },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Configure Relay Channels",
+        "description": "Customize the name and area for each relay channel. Names default to 'Relay 1', 'Relay 2', etc. Leave area empty to skip assignment.",
+        "data": {
+          "channel_1_name": "Channel 1 Name",
+          "channel_1_area": "Channel 1 Area",
+          "channel_2_name": "Channel 2 Name",
+          "channel_2_area": "Channel 2 Area",
+          "channel_3_name": "Channel 3 Name",
+          "channel_3_area": "Channel 3 Area",
+          "channel_4_name": "Channel 4 Name",
+          "channel_4_area": "Channel 4 Area",
+          "channel_5_name": "Channel 5 Name",
+          "channel_5_area": "Channel 5 Area",
+          "channel_6_name": "Channel 6 Name",
+          "channel_6_area": "Channel 6 Area",
+          "channel_7_name": "Channel 7 Name",
+          "channel_7_area": "Channel 7 Area",
+          "channel_8_name": "Channel 8 Name",
+          "channel_8_area": "Channel 8 Area"
+        }
+      }
+    }
+  },
   "entity": {
     "button": {
       "pulse": {

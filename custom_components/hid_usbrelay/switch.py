@@ -23,10 +23,19 @@ async def async_setup_entry(
     config_data = hass.data[DOMAIN][entry.entry_id]
     num_relays = config_data.get("relays", 8)
     product_name = config_data.get("product", "USB Relay")
+    
+    # Get channel configuration from options
+    channel_config = entry.options.get("channels", {})
 
     relays = []
     for i in range(1, num_relays + 1):
-        relays.append(USBRelaySwitch(i, product_name, entry.entry_id))
+        channel_settings = channel_config.get(f"channel_{i}", {})
+        relays.append(USBRelaySwitch(
+            i, 
+            product_name, 
+            entry.entry_id,
+            channel_settings
+        ))
 
     async_add_entities(relays)
 
@@ -36,14 +45,16 @@ class USBRelaySwitch(SwitchEntity):
     _attr_should_poll = False
     _attr_assumed_state = False
 
-    def __init__(self, channel, product_name, entry_id):
+    def __init__(self, channel, product_name, entry_id, channel_settings=None):
         self._channel = channel
         self._product_name = product_name
         self._entry_id = entry_id
+        self._channel_settings = channel_settings or {}
         self._attr_is_on = False
         
         self._attr_has_entity_name = True
-        self._attr_name = f"{channel} Switch"
+        # Use custom name if provided, otherwise default to "Relay {channel}"
+        self._attr_name = self._channel_settings.get("name", f"Relay {channel}")
         
         self._attr_unique_id = f"{entry_id}_switch_{channel}"
 
